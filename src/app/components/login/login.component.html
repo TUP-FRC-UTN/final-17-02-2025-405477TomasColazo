@@ -1,9 +1,14 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label class="form-label">Email Institucional</label>
+    <div class=" p-0 card border-black border-2" style="width: 60vh">
+      <div class="card-header  bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 col-9">
+          Login
+        </h4>
+      </div>
+      <form [formGroup]="loginForm" class="p-2" (ngSubmit)="onSubmit()">
+        <div class="mb-3 ">
+          <label class="form-label">Username</label>
           <input
             type="email"
             class="form-control"
@@ -20,7 +25,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Legajo</label>
+          <label class="form-label">Password</label>
           <input
             type="password"
             class="form-control"
@@ -36,7 +41,7 @@
             }
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        <button type="submit" class="btn btn-primary mb-3">Iniciar Sesión</button>
       </form>
     </div>
   </div>

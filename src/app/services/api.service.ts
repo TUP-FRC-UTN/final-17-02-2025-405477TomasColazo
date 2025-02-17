@@ -24,13 +24,13 @@ export class ApiService {
 
   private readonly client = inject(HttpClient);
 
-  private apiUrl = 'https://671fe287e7a5792f052fdf93.mockapi.io';
+  private readonly apiUrl = 'https://671fe287e7a5792f052fdf93.mockapi.io';
 
   get randomWords(): Observable<Word[]> {
     return this.client.get<Word[]>(`${this.apiUrl}/words`);
   }
 
-  submitScore(score: any): Observable<any> {
+  submitScore(score: any) {
     return this.client.post(`${this.apiUrl}/scores`, score);
   }
 
@@ -38,7 +38,7 @@ export class ApiService {
     return this.client.get<Score[]>(`${this.apiUrl}/scores`);
   }
 
-  getGamesPlayed(playername:string){
-    return this.client.get<Score[]>(`${this.apiUrl}/scores?playerName=${playername}`);
+  getGamesPlayed(playerName:string){
+    return this.client.get<Score[]>(`${this.apiUrl}/scores?playerName=${playerName}`);
   }
 }

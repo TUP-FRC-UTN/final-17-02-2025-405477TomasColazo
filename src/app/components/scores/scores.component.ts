@@ -21,7 +21,7 @@ export class ScoresComponent implements OnInit, OnDestroy {
   scores: Score[] = []
   subs = new Subscription();
   isAdmin = false;
-
+  toggled = false;
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
@@ -33,9 +33,19 @@ export class ScoresComponent implements OnInit, OnDestroy {
   private loadScores() {
     const currentUser = this.authService.currentUser$;
     if (this.isAdmin){
-      this.subs.add(this.api.scores.subscribe(score => {
-        this.scores = score.sort((a, b) => b.attemptsLeft - a.attemptsLeft);
-      }));
+      if(!this.toggled){
+        this.subs.add(this.api.scores.subscribe(score => {
+          this.scores = score.sort((a, b) => b.attemptsLeft - a.attemptsLeft);
+        }));
+      }else {
+        this.subs.add(currentUser.subscribe(user =>{
+          this.subs.add(this.api.getGamesPlayed(user?.username ?? '').subscribe(userScores => {
+            this.scores = userScores.sort((a, b) => b.attemptsLeft - a.attemptsLeft);
+
+          }));
+        }))
+      }
+
     }else {
       this.subs.add(currentUser.subscribe(user =>{
         this.subs.add(this.api.getGamesPlayed(user?.username ?? '').subscribe(userScores => {
@@ -46,4 +56,8 @@ export class ScoresComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleView() {
+    this.toggled = !this.toggled;
+    this.loadScores()
+  }
 }
